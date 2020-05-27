@@ -1,0 +1,25 @@
+version: 2.1
+
+parameters:
+  danger-version: 
+    type: string
+    default: 8.0.0
+
+jobs:
+  build-deploy-image:
+    docker: 
+      - image: cibuilds/docker:latest
+    steps:
+      - checkout
+      - setup_remote_docker
+      - run:
+          name: "Build Danger << pipeline.parameters.danger-version >> image"
+          command: docker build --file versions/<< pipeline.parameters.danger-version >>/Dockerfile -t bytesguy/danger:latest -t bytesguy/danger:<< pipeline.parameters.danger-version >> .
+      - run:
+          name: "Publish Image to DockerHub"
+          command: echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin && docker push bytesguy/danger
+
+workflows:
+  build-swiftlint:
+    jobs:
+      - build-deploy-image
