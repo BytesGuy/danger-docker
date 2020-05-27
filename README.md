@@ -33,7 +33,7 @@ More information about a multi executor setup can be found in the [CircleCI iOS 
 
 ## Image Information
 
-Each time danger is updated, there will be a new, version tagged, release of the danger docker image. 
+Each time danger is updated, there will be a new, version tagged, release of the danger docker image. The latest version of Ruby will always be used at the time of building.
 
 The images are built on the official CircleCI base image to ensure compatbility with CircleCI jobs.
 
